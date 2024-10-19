@@ -9,6 +9,20 @@ Rails.application.routes.draw do
     sessions: "public/sessions"
   }
 
+  #管理者側のルーティング設定
+  namespace :admin do
+    get 'feeling_posts/index'
+    get 'feeling_posts/show'
+    get 'feeling_posts/destroy'
+
+    get 'users/show'
+    get 'users/edit'
+    get 'users/update'
+
+    get 'homes/top'
+  end
+
+
   #ユーザー側のルーティング設定
   namespace :public do
     get 'relationships/create'
