@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_10_17_053209) do
+ActiveRecord::Schema.define(version: 2024_10_19_054810) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,80 @@ ActiveRecord::Schema.define(version: 2024_10_17_053209) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "feeling_post_id", null: false
+    t.text "comment", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feeling_post_id"], name: "index_comments_on_feeling_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "feeling_post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feeling_post_id"], name: "index_favorites_on_feeling_post_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "feeling_posts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "title", null: false
+    t.text "body", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_feeling_posts_on_user_id"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "follwed_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index "\"follwer_id\", \"follwed_id\"", name: "index_relationships_on_follwer_id_and_follwed_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
+    t.index ["follwed_id"], name: "index_relationships_on_follwed_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "name", null: false
+    t.string "name_kana", null: false
+    t.string "telephone_number", null: false
+    t.date "birthday"
+    t.boolean "is_active", default: true, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "feeling_posts"
+  add_foreign_key "comments", "users"
+  add_foreign_key "favorites", "feeling_posts"
+  add_foreign_key "favorites", "users"
+  add_foreign_key "feeling_posts", "users"
+  add_foreign_key "relationships", "users", column: "follower_id"
+  add_foreign_key "relationships", "users", column: "follwed_id"
 end

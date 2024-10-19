@@ -1,0 +1,2 @@
+module Public::FeelingPostsHelper
+end
