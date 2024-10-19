@@ -10,51 +10,42 @@ Rails.application.routes.draw do
   }
 
   #管理者側のルーティング設定
+  get 'admin', to: 'admin/homes#top'
   namespace :admin do
-    get 'feeling_posts/index'
-    get 'feeling_posts/show'
-    get 'feeling_posts/destroy'
-
-    get 'users/show'
-    get 'users/edit'
-    get 'users/update'
-
-    get 'homes/top'
+    resources :users, only: [:show, :edit, :update]
+    resources :feeling_posts, only: [:index, :show, :destroy]
   end
 
 
   #ユーザー側のルーティング設定
-  namespace :public do
-    get 'relationships/create'
-    get 'relationships/destroy'
+  root 'public/homes#top'
+  get 'about', to: 'public/homes#about'
 
-    get 'favorites/create'
-    get 'favorites/destroy'
-    get 'favorites/index'
+  scope module: :public do
+    resources :users, only: [:index, :show, :edit, :update] do
+      collection do #オリジナルのアクションに対する設定
+        get 'check' #退会確認ページのアクション
+        patch 'out' #退会処理のアクション
+        get 'search' #キーワード検索のアクション
+      end
 
-    get 'commentes/create'
-    get 'commentes/update'
-    get 'commentes/destroy'
+      #フォロー・フォロワーはユーザーと親子関係になる
+      resource :relationships, only: [:create, :destroy] #resource単数形 → /:idがURLに含まれない（フォローなどのidはURLに含める必要がない）
+        get "followers" => "relationships#followers", as: "followers" #フォロワー(フォローわれている人)の一覧を表示
+        get "followings" => "relationships#followings", as: "followings" #フォローしている人の一覧を表示
 
-    get 'feeling_posts/new'
-    get 'feeling_posts/create'
-    get 'feeling_posts/index'
-    get 'feeling_posts/show'
-    get 'feeling_posts/edit'
-    get 'feeling_posts/update'
-    get 'feeling_posts/destroy'
-    get 'feeling_posts/search'
+    end
 
-    get 'users/index'
-    get 'users/show'
-    get 'users/edit'
-    get 'users/update'
-    get 'users/search'
-    get 'users/check'
-    get 'users/out'
+    resources :feeling_posts, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
+      collection do
+        get 'search'
+      end
 
-    get 'homes/top'
-    get 'homes/about'
+      #コメント、いいねは投稿に対し行われるため、親子関係になる
+      resources :comments, only: [:create, :update, :destroy]
+      resource :favorite, only: [:create, :destroy, :index] #resource単数形 → /:idがURLに含まれない（いいねのidはURLに含める必要がない）
+    end
+
   end
 
 
