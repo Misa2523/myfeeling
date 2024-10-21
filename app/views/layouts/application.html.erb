@@ -11,6 +11,36 @@
   </head>
 
   <body>
+    <header>
+      <% if user_signed_in? %>
+        <div>
+          <h3>サインインしています</h3>
+          <ul>
+            <li>ログアウト</li>
+          </ul>
+        </div>
+      <% elsif admin_signed_in? %>
+        <div>
+          <h3>管理者でサインインしています</h3>
+          <ul>
+            <li>ログアウト</li>
+          </ul>
+        </div>
+      <% else %>
+        <div>
+          <ul>
+            <li>About</li>
+            <li>新規登録</li>
+            <li>ログイン</li>
+          </ul>
+        </div>
+      <% end %>
+    </header>
     <%= yield %>
+    <footer>
+      <div>
+        <div>@2024 hedgedog</div>
+      </div>
+    </footer>
   </body>
 </html>
