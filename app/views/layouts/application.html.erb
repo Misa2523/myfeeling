@@ -19,7 +19,7 @@
             <li>ログアウト</li>
           </ul>
         </div>
-      <% elsif admin_sign_in? %>
+      <% elsif admin_signed_in? %>
         <div>
           <h3>管理者でサインインしています</h3>
           <ul>
@@ -38,6 +38,9 @@
     </header>
     <%= yield %>
     <footer>
+      <div>
+        <div>@2024 hedgedog</div>
+      </div>
     </footer>
   </body>
 </html>
