@@ -1,29 +1,51 @@
 新規登録ページ
-<h2>Sign up</h2>
+<h2>新規登録</h2>
 
 <%= form_with model: @user, url: user_registration_path do |f| %>
   <%= render "public/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div>
+    <%= f.label :"氏名" %>
+    <%= f.text_field :name, autofocus: true, required: true, autocomplete: "name", placeholder: "山田一郎太" %>
+    <!--required: true 必須フィールド。未入力で送信しようとするとエラーメッセージを表示する-->
+    <!--autocomplete: ブラウザがフィールドの入力内容を記憶し、自動補完を提供する-->
+  </div>
+
+  <div>
+    <%= f.label :"シメイ" %>
+    <%= f.text_field :name_kana, required: true, autocomplete: "name_kana", placeholder: "ヤマダイチロウタ" %>
+  </div>
+
+  <div>
+    <%= f.label :"メールアドレス" %>
+    <%= f.email_field :email, required: true, autocomplete: "email", placeholder: "ichirota111@email.com" %>
+  </div>
+
+  <div>
+    <%= f.label :"電話番号" %>
+    <%= f.text_field :telephone_number, required: true, autocomplete: "telephone_number", placeholder: "11111111111" %>
+  </div>
+
+  <div>
+    <%= f.label :"誕生日" %>
+    <%= f.date_field :birthday %>
   </div>
 
   <div class="field">
-    <%= f.label :password %>
+    <%= f.label :"パスワード" %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <em>(<%= @minimum_password_length %>文字以上)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password, required: true, autocomplete: "new-password" %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.label :"パスワード(確認用)" %><br />
+    <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "新規登録" %>
   </div>
 <% end %>
 
