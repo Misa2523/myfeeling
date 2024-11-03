@@ -3,15 +3,21 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+
   #アソシエーション
   has_many :feeling_posts, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
-  
-   has_one_attached :user_image
-  
-  
+
+
+  has_one_attached :user_image
+
+  #バリデーション
+  validates :name, presence: true
+  validates :name_kana, presence: true
+  validates :telephone_number, presence: true
+  validates :birthday, presence: true
+
   def get_uer_image(width, height)
     unless user_image_attached? #画像がなかったら
       #Railsアプリのルートディレクトリから、''へのパスを作成
@@ -21,4 +27,5 @@ class User < ApplicationRecord
     end
     user_image.variant(rerize_to_fill: [width, height]).processed #user_imageを指定された幅と高さにリサイズ
   end
+
 end
