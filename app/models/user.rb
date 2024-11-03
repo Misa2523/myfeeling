@@ -41,5 +41,12 @@ class User < ApplicationRecord
     end
     user_image.variant(rerize_to_fill: [width, height]).processed #user_imageを指定された幅と高さにリサイズ
   end
+  
+  #ユーザーが認証可能かどうかを判断するメソッド
+  def active_for_authentication?
+    super && (self.is_active == true)
+    #superは親クラス(今回はdeviseのモジュール)の同名メソッドを呼び出す
+    #self.is_activeはユーザーオブジェクトのis_active属性を参照
+  end
 
 end
