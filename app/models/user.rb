@@ -4,7 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
          
-  has_one_attached :user_image
+  #アソシエーション
+  has_many :feeling_posts, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  
+   has_one_attached :user_image
+  
   
   def get_uer_image(width, height)
     unless user_image_attached? #画像がなかったら
