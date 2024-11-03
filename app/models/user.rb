@@ -8,7 +8,21 @@ class User < ApplicationRecord
   has_many :feeling_posts, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
-
+  
+  ##フォローするユーザーから見た中間テーブル（ユーザーがフォローしている他のユーザーとの関係を示す関連付け）
+  has_many :active_relationships, class_name: "Relationship",   #class_name：別のモデルに基づいていることを示す
+                                  foreign_key: "follower_id",   #foreign_key：別のモデルでのカラムを通じて結びついていることを示す（このユーザーがフォローしている他ユーザーのIDがfollower_idに格納される）
+                                  dependent: :destroy
+  ##フォローされているユーザーから見た中間テーブル（このユーザーがフォローされている関係を示す）
+  has_many :passive_relationships, class_name: "Relationship",
+                                  foreign_key: "followed_id",   #このユーザーのIDがfollowed_idに格納される
+                                  dependent: :destroy
+  ##中間テーブルactive_relationshipsを通りフォローされる側(followed)を集める処理をfollowingsとする
+  ##フォローしてるユーザーの情報が分かるようになる
+  has_many :followings, through: :active_relationships, source: :followed   #source：active_relationshipsで関連付けられたfollowed(フォローされているユーザー)を指定
+  ##中間テーブルpassive_relationshipsを通りフォローする側(follower)を集める処理をfollowersとする
+  ##フォローされているユーザーの情報が分かるようになる
+  has_many :followers, through: :passive_relationships, source: :follower
 
   has_one_attached :user_image
 
