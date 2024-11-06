@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :feeling_posts, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
-  
+
   ##フォローするユーザーから見た中間テーブル（ユーザーがフォローしている他のユーザーとの関係を示す関連付け）
   has_many :active_relationships, class_name: "Relationship",   #class_name：別のモデルに基づいていることを示す
                                   foreign_key: "follower_id",   #foreign_key：別のモデルでのカラムを通じて結びついていることを示す（このユーザーがフォローしている他ユーザーのIDがfollower_idに格納される）
@@ -41,12 +41,28 @@ class User < ApplicationRecord
     end
     user_image.variant(rerize_to_fill: [width, height]).processed #user_imageを指定された幅と高さにリサイズ
   end
-  
+
   #ユーザーが認証可能かどうかを判断するメソッド
   def active_for_authentication?
     super && (self.is_active == true)
     #superは親クラス(今回はdeviseのモジュール)の同名メソッドを呼び出す
     #self.is_activeはユーザーオブジェクトのis_active属性を参照
+  end
+
+
+  #指定したユーザーをフォローする（active_relationshipsを経由して指定したユーザーをフォロー）
+  def follow(user)
+    active_relationships.create(followed_id: user.id)
+  end
+
+  #指定したユーザーのフォローを解除する
+  def unfollow(user)
+    active_relationships.find_by(followed_id: user.id).destroy
+  end
+
+  #指定したユーザーをフォローしているかどうか判定
+  def following?(user)
+    followings.include?(user) #真偽値で返す
   end
 
 end
