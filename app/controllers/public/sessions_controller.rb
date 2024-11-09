@@ -8,7 +8,7 @@ class Public::SessionsController < Devise::SessionsController
   end
 
   def after_sign_out_path_for(resource_or_scope) #resource_or_scopeにはサインアウトしたリソースやスコープの情報が渡される
-    root_path
+    about_path #アバウトページへ遷移
   end
 
   # GET /resource/sign_in
