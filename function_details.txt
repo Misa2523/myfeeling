@@ -7,3 +7,7 @@
 ・いいね一覧表示機能
 ・フォロー/フォロワー機能
 ・いいねとコメントの非同期化
+
+
+[config/locales/ja.yml] Railsの標準的な翻訳設定ファイル
+[config/locales/devise.views.ja.yml] Deviseの翻訳を設定するファイル
