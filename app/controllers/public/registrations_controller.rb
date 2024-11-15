@@ -7,7 +7,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   def after_sign_up_path_for(resource) #resourceには新規登録したユーザーの情報が渡される
-    user_path #リダイレクト先を設定（マイページ）
+    user_path(current_user.id) #リダイレクト先を設定（マイページ）
   end
 
   # GET /resource/sign_up
