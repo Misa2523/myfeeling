@@ -3,6 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+         
+  before_validation :normalize_email #privateで定義
 
   #アソシエーション
   has_many :feeling_posts, dependent: :destroy
@@ -27,10 +29,12 @@ class User < ApplicationRecord
   has_one_attached :user_image
 
   #バリデーション
-  validates :name, presence: true
+  validates :name, presence: true # presence：必須項目を示す
   validates :name_kana, presence: true
   validates :telephone_number, presence: true
   validates :birthday, presence: true
+  validates :email, presence: true, uniqueness: true, # uniqueness：一意性を示す
+            format: {with: URI::MailTo::EMAIL_REGEXP} # メールアドレスが正しいフォーマットであることを
 
   def get_uer_image(width, height)
     unless user_image_attached? #画像がなかったら
@@ -63,6 +67,17 @@ class User < ApplicationRecord
   #指定したユーザーをフォローしているかどうか判定
   def following?(user)
     followings.include?(user) #真偽値で返す
+  end
+  
+  
+  private
+  
+  #ユーザーが入力したメールアドレスに対する処理をするメソッド
+  def normalize_email
+    self.email = email.downcase.strip if email.present?
+    # downcase：メールアドレスを小文字に変換（同じメールアドレスで大小文字の違いによる重複登録を防ぐ）
+    # strip：メールアドレスの前後の空白を削除
+    # email.present?：メールアドレスが空でない場合にのみ処理をおこなう
   end
 
 end
