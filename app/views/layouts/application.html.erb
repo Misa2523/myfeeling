@@ -11,47 +11,54 @@
   </head>
 
   <body>
-    <header>
-      <% if user_signed_in? %>
-        <div>
+    <header class="p-2">
+      <div><!--<div class="d-flex justify-content-between align-items-center">-->
+        <% if user_signed_in? %>
           <div>
-            <div><%= link_to "トップ", root_path %></div>
+            <!--左側のホームボタン-->
+            <div>
+              <%= link_to "トップ", root_path %>
+            </div>
+            <h3>ログインしています</h3>
+            <!--右側のメニュー部分-->
+            <nav class="mb-2">
+              <ul class="navbar-nav list-group-horizontal"> <!-- navbar-nav：ナビゲーションメニューのulタグにつけるクラス、list-group-horizontal：リストの横並び -->
+              <li class="nav-item"><%= link_to "ユーザー", users_path %></li>
+              <li class="nav-item"><%= link_to "みんなの投稿", feeling_posts_path %></li>
+              <li class="nav-item">マイページ</li>
+              <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+            </ul>
+            </nav>
+
           </div>
-          <h3>ログインしています</h3>
-          <ul>
-            <li><%= link_to "ユーザー", users_path %></li>
-            <li><%= link_to "みんなの投稿", feeling_posts_path %></li>
-            <li>マイページ</li>
-            <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
-          </ul>
-        </div>
-      <% elsif admin_signed_in? %>
-        <div>
+        <% elsif admin_signed_in? %>
           <div>
-            <div><%= link_to "トップ", root_path %></div>
+            <div>
+              <div><%= link_to "トップ", root_path %></div>
+            </div>
+            <h3>管理者でログインしています</h3>
+            <ul>
+              <li><%= link_to "ユーザー", admin_path %></li>
+              <li><%= link_to "投稿一覧", admin_feeling_posts_path %></li>
+              <li><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
+            </ul>
           </div>
-          <h3>管理者でログインしています</h3>
-          <ul>
-            <li><%= link_to "ユーザー", admin_path %></li>
-            <li><%= link_to "投稿一覧", admin_feeling_posts_path %></li>
-            <li><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
-          </ul>
-        </div>
-      <% else %>
-        <div>
+        <% else %>
           <div>
-            <div><%= link_to "トップ", root_path %></div>
+            <div>
+              <div><%= link_to "トップ", root_path %></div>
+            </div>
+            <ul>
+              <li><%= link_to "About", about_path %></li>
+              <li><%= link_to "新規登録", new_user_registration_path %></li>
+              <li><%= link_to "ログイン", new_user_session_path %></li>
+            </ul>
           </div>
-          <ul>
-            <li><%= link_to "About", about_path %></li>
-            <li><%= link_to "新規登録", new_user_registration_path %></li>
-            <li><%= link_to "ログイン", new_user_session_path %></li>
-          </ul>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </header>
     <%= yield %>
-    <footer>
+    <footer class="p-2">
       <div>
         <div>@2024 hedgedog</div>
       </div>
