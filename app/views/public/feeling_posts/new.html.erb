@@ -1,1 +1,11 @@
-新規投稿ページ
+<h3>今の気持ちを投稿</h3>
+
+<%= form_with mode: @feeling_post, url: feeling_posts_path, method: :post do |f| %>
+
+  <h5>タイトル</h5>
+  <div><%= f.text_field :title %></div>
+  <h5>本文</h5>
+  <div><%= f.text_area :body %></div>
+  <div><%= f.submit "投稿", class: "btn btn-success", style: "font-weight: bold;" %></div>
+
+<% end %>
