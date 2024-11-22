@@ -1,11 +1,11 @@
 <h3>今の気持ちを投稿</h3>
 
-<%= form_with mode: @feeling_post, url: feeling_posts_path, method: :post do |f| %>
+<%= form_with model: @feeling_post, url: feeling_posts_path do |f| %>
 
   <h5>タイトル</h5>
-  <div><%= f.text_field :title %></div>
+  <div><%= f.text_field :title, required: true %></div>
   <h5>本文</h5>
-  <div><%= f.text_area :body %></div>
+  <div><%= f.text_area :body, required: true %></div>
   <div><%= f.submit "投稿", class: "btn btn-success", style: "font-weight: bold;" %></div>
 
 <% end %>

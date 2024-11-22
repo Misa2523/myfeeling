@@ -1,4 +1,6 @@
 class Public::FeelingPostsController < ApplicationController
+
+
   def new
     # viewへ渡すためのインスタンス変数に空のmodelオブジェクトを生成
     @feeling_post = FeelingPost.new
@@ -7,6 +9,8 @@ class Public::FeelingPostsController < ApplicationController
   def create
     # データを受け取り新規登録するためのインスタンス作成
     @feeling_post = FeelingPost.new(feeling_post_params)
+    # 投稿者を設定
+    @feeling_post.user_id = current_user.id
     # データをデータベースに保存するためのsaveメソッド実行
     if @feeling_post.save
       flash[:notice] = "投稿しました"
@@ -21,6 +25,7 @@ class Public::FeelingPostsController < ApplicationController
   end
 
   def show
+    @feeling_post = FeelingPost.find(params[:id])
   end
 
   def edit
@@ -30,6 +35,14 @@ class Public::FeelingPostsController < ApplicationController
   end
 
   def destroy
+    @feeling_post = FeelingPost.find(params[:id])
+    if @feeling_post.destroy
+      flash[:notice] = "削除しました"
+      redirect_to feeling_post_path
+    else
+      flash.now[:alert] = "削除できませんでした"
+      render :show
+    end
   end
 
   def search
@@ -38,7 +51,7 @@ class Public::FeelingPostsController < ApplicationController
   private
 
   def feeling_post_params
-    params.require(:feeling_post).permit(:title, :body)
+    params.require(:feeling_post).permit(:user_id, :title, :body)
     # params：formから送られてくるデータが入ってる
     # require：送られてきたデータの中からモデル名(ここでは:feeling_post)を指定しデータを絞り込む
     # permit：requireで絞り込んだデータの中から保存を許可するカラムを指定
