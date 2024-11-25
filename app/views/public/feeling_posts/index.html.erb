@@ -1,1 +1,17 @@
-投稿一覧ページ
+<h3>みんなの投稿一覧</h3>
+
+<% @feeling_post.each do |feeling_post| %>
+
+  <h5>タイトル</h5>
+  <div><%= feeling_post.title %></div>
+  <h5>本文</h5>
+  <div><%= truncate(feeling_post.body, length: 8) %></div> <!--5文字のみ表示-->
+  <!--truncate(文字列[, オプション])　文字列を省略するメソッド-->
+  <!--「オプション」:length切り捨ての桁数(...も数に含まれる)、:separator切り捨てる箇所を表す文字列、:omission切り捨て時に末尾に付与する文字列-->
+
+  <div><%= feeling_post.user.name %></div>
+
+  <div><%#= link_to "編集", edit_feeling_post_path(@feeling_post), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>
+  <div><%#= button_to "削除", feeling_post_path(@feeling_post), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger", style: "font-weight: bold;" %></div>
+
+<% end %>

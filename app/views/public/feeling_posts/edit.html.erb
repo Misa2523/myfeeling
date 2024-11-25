@@ -1,1 +1,12 @@
-投稿編集ページ
+<h3>投稿の編集</h3>
+
+<%= form_with model: @feeling_post, url: feeling_post_path do |f| %>
+
+  <h5>タイトル</h5>
+  <div><%= f.text_field :title, required: true %></div>
+  <h5>本文</h5>
+  <div><%= f.text_area :body, required: true %></div>
+  <div><%= f.submit "変更を保存", class: "btn btn-success", style: "font-weight: bold;" %></div>
+
+<% end %>
+

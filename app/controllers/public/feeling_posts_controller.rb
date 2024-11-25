@@ -22,16 +22,33 @@ class Public::FeelingPostsController < ApplicationController
   end
 
   def index
+    @feeling_post = FeelingPost.includes(:user).where(users: { is_active: true })
   end
+  
+  
+  # def index
+  #   #会員ステータスが有効である会員の投稿を取得（アソシエーションの関係はincludesで読み込み）
+  #   @cooking_posts = CookingPost.includes(:customer).where(customers: { is_active: true }).order(created_at: :desc).page(params[:page]).per(10) #orderメソッドで投稿された順に並べる
+  # end
 
   def show
     @feeling_post = FeelingPost.find(params[:id])
   end
 
   def edit
+    @feeling_post = FeelingPost.find(params[:id])
   end
 
   def update
+    @feeling_post = FeelingPost.find(params[:id])
+    @feeling_post.user_id = current_user.id
+    if @feeling_post.update(feeling_post_params)
+      flash[:notice] = "投稿内容を変更しました"
+      redirect_to feeling_post_path(@feeling_post)
+    else
+      flash.now[:alert] = "投稿内容を変更できませんでした"
+      render :edit
+    end
   end
 
   def destroy
