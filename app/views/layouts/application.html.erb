@@ -47,7 +47,19 @@
         <% end %>
       </div>
     </header>
-    <%= yield %>
+
+    <main>
+      <!--フラッシュメッセージ表示-->
+      <% flash.each do |message_type, message| %>
+        <div class="flash-massage <%= message_type %>"><%= message %></div>
+      <% end%>
+       <!--flashをeachメソッドと実行するとキーと対応する値を取り出すことが可能-->
+       <!--取り出したキー(:noticeや:alert)：message_type、値("投稿しました"や"失敗しました")：messageにそれぞれ代入-->
+
+      <!--各ページのビュー表示-->
+      <%= yield %>
+    </main>
+
     <footer class="p-2" style="background-color: #e5ffcc;">
       <div>
         <div class="text-center">@2024 hedgedog</div>
