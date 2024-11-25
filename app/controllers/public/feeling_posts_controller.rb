@@ -55,7 +55,7 @@ class Public::FeelingPostsController < ApplicationController
     @feeling_post = FeelingPost.find(params[:id])
     if @feeling_post.destroy
       flash[:notice] = "削除しました"
-      redirect_to feeling_post_path
+      redirect_to feeling_posts_path
     else
       flash.now[:alert] = "削除できませんでした"
       render :show
