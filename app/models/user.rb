@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+
   before_validation :normalize_email #privateで定義
 
   #アソシエーション
@@ -37,13 +37,13 @@ class User < ApplicationRecord
             format: {with: URI::MailTo::EMAIL_REGEXP} # メールアドレスが正しいフォーマットであることを
 
   def get_uer_image(width, height)
-    unless user_image_attached? #画像がなかったら
+    unless user_image.attached? #画像がなかったら
       #Railsアプリのルートディレクトリから、''へのパスを作成
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
       #user_imageに対し、指定されたfile_pathからファイルを開き添付
       user_image.attach(io: File.open(file_path), filename: 'no_image.jpg', content_type: 'image/jpeg') #filenameとcontent_typeを指定し、画像のメタデータを設定
     end
-    user_image.variant(rerize_to_fill: [width, height]).processed #user_imageを指定された幅と高さにリサイズ
+    user_image.variant(resize_to_fill: [width, height]).processed #user_imageを指定された幅と高さにリサイズ
   end
 
   #ユーザーが認証可能かどうかを判断するメソッド
@@ -51,6 +51,11 @@ class User < ApplicationRecord
     super && (self.is_active == true)
     #superは親クラス(今回はdeviseのモジュール)の同名メソッドを呼び出す
     #self.is_activeはユーザーオブジェクトのis_active属性を参照
+  end
+
+   #誕生日の表示をメソッド化する（表示の時にvuewファイルで呼び出す）
+  def birthday_view
+    birthday.strftime("%Y年%m月%d日")
   end
 
 
@@ -68,15 +73,9 @@ class User < ApplicationRecord
   def following?(user)
     followings.include?(user) #真偽値で返す
   end
-  
-  #誕生日の表示をメソッド化する（表示の時にvuewファイルで呼び出す）
-  def birthday_view
-    birthday.strftime("%Y年%m月%d日")
-  end
-  
-  
+
   private
-  
+
   #ユーザーが入力したメールアドレスに対する処理をするメソッド
   def normalize_email
     self.email = email.downcase.strip if email.present?

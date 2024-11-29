@@ -4,7 +4,7 @@
   <h3><%= @user.name %>さんのプロフィール</h3>
 <% end %>
 
-<div>（画像）<%#= @user.get_uer_image(100, 100) %></div>
+<div><%= image_tag @user.get_uer_image(100, 100) %></div>
 
 <h5>氏名</h5>
 <div><%= @user.name %>（<%= @user.name_kana %>）</div>
