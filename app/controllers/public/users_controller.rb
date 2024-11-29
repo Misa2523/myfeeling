@@ -3,6 +3,7 @@ class Public::UsersController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update, :out]
 
   def index
+    @user = User.all
   end
 
   def show

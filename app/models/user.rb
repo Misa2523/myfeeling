@@ -69,6 +69,11 @@ class User < ApplicationRecord
     followings.include?(user) #真偽値で返す
   end
   
+  #誕生日の表示をメソッド化する（表示の時にvuewファイルで呼び出す）
+  def birthday_view
+    birthday.strftime("%Y年%m月%d日")
+  end
+  
   
   private
   

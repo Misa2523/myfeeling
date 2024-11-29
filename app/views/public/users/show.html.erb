@@ -4,3 +4,18 @@
 
 あなたのユーザー名：<%= current_user.name %><br>
 参照しているユーザー名：<%= @user.name %>
+
+<h3><%= @user.name %>さんのプロフィール</h3>
+
+<h5>氏名</h5>
+<div><%= @user.name %>（<%= @user.name_kana %>）</div>
+
+<h5>誕生日</h5>
+<div><%= @user.birthday_view %></div> <!--userモデルに記載したbirthday_viewメソッド呼び出し-->
+
+<!--<div>投稿者：<%#= @feeling_post.user.name %></div>-->
+<!--<div>投稿日時：<%#= @feeling_post.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d %H:%M") %></div>-->
+
+<!--<div><#%= link_to "編集", edit_feeling_post_path(@feeling_post), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>-->
+<!--<div><%#= button_to "削除", feeling_post_path(@feeling_post), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger", style: "font-weight: bold;" %></div>-->
+
