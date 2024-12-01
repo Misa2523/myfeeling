@@ -1,1 +1,26 @@
-ユーザー情報編集ページ
+<h3>マイプロフィール編集</h3>
+
+<%= form_with model: @user, url: user_path do |f| %>
+
+  <div><%= image_tag @user.get_uer_image(100, 100) %></div> <!--HTMLのimgタグを生成するimage_tagヘルパーを使う-->
+  <!--@user.get_uer_image(100, 100)は画像のURLを返すだけだが、それをimage_tagで囲むとHTMLの<img>タグとして表示される画像になる-->
+  <!--image_tagなしだとURL自体が文字列として表示され、画像として表示されない-->
+
+  <h5>氏名</h5>
+  <div>
+    <%= f.text_field :name, required: true %>
+    <%= f.text_field :name_kana, required: true %>
+  </div>
+
+  <h5>誕生日</h5>
+  <div><%= f.date_field :birthday %></div>
+
+  <h5>メールアドレス</h5>
+  <div><%= f.email_field :email, required: true %></div>
+
+  <h5>電話番号</h5>
+  <div><%= f.text_field :telephone_number, required: true %></div>
+
+  <div><%= f.submit "変更を保存", class: "btn btn-success", style: "font-weight: bold;" %></div>
+
+<% end %>
