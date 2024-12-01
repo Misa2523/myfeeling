@@ -1,6 +1,29 @@
-マイプロフィール
+<% if current_user.id == @user.id %>
+  <h3>マイプロフィール</h3>
+<% else %>
+  <h3><%= @user.name %>さんのプロフィール</h3>
+<% end %>
 
-（ユーザーの画像も表示する）<br><br>
+<div><%= image_tag @user.get_uer_image(100, 100) %></div> <!--HTMLのimgタグを生成するimage_tagヘルパーを使う-->
+<!--@user.get_uer_image(100, 100)は画像のURLを返すだけだが、それをimage_tagで囲むとHTMLの<img>タグとして表示される画像になる-->
+<!--image_tagなしだとURL自体が文字列として表示され、画像として表示されない-->
 
-あなたのユーザー名：<%= current_user.name %><br>
-参照しているユーザー名：<%= @user.name %>
+<h5>氏名</h5>
+<div><%= @user.name %>（<%= @user.name_kana %>）</div>
+
+<h5>誕生日</h5>
+<div><%= @user.birthday_view %></div> <!--userモデルに記載したbirthday_viewメソッド呼び出し-->
+
+<% if current_user.id == @user.id %>
+  <h5>メールアドレス</h5>
+  <div><%= @user.email %></div>
+
+  <h5>電話番号</h5>
+  <div><%= @user.telephone_number %></div>
+
+  <h5>アカウント作成日</h5>
+  <div><%= @user.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d") %></div>
+
+  <div><%= link_to "編集", edit_user_path(@user), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>
+  <div><%= link_to "退会", check_users_path, class: "btn btn-outline-danger", style: "font-weight: bold;" %></div>
+<% end %>

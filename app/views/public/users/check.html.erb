@@ -1,1 +1,12 @@
-退会確認ページ
+<h3><strong>本当に退会しますか？</strong></h3>
+<div>
+  一度退会するとアカウントに関する情報は削除され、<br>
+  再度ログインはできなくなります。<br>
+  再度アプリを使う際は新しいアカウントを作成してください。<br>
+  退会する場合は、「退会する」をクリックしてください。
+</div>
+
+<div>
+  <div><%= link_to "退会しない", user_path(@user), class: "btn btn-primary", style: "font-weight: bold;" %></div>
+  <div><%= button_to "退会する", out_users_path,method: :patch, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger", style: "font-weight: bold;" %></div>
+</div>
