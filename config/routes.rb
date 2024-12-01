@@ -24,9 +24,9 @@ Rails.application.routes.draw do
   scope module: :public do
     resources :users, only: [:index, :show, :edit, :update] do
       collection do #オリジナルのアクションに対する設定
-        get 'check' #退会確認ページのアクション
-        patch 'out' #退会処理のアクション
-        get 'search' #キーワード検索のアクション
+        get 'check' => "users#check" #退会確認ページのアクション
+        patch 'out' => "users#out" #退会処理のアクション
+        get 'search' => "users#search" #キーワード検索のアクション
       end
 
       #フォロー・フォロワーはユーザーと親子関係になる
