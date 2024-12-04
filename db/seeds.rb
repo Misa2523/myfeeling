@@ -9,6 +9,6 @@
 
 #データ登録
 ##Adminレコードが存在しなければ新規作成し、存在していたら何も変更されない
-Admin.find_or_create_by(email:'sample:example.com') do |admin|
+Admin.find_or_create_by(email:'sample@example.com') do |admin|
   admin.password = '1232589'
 end
