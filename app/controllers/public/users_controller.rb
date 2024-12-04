@@ -1,6 +1,6 @@
 class Public::UsersController < ApplicationController
 
-  before_action :is_matching_login_user, only: [:edit, :update, :out]
+  before_action :is_matching_login_user, only: [:edit, :update]
 
   def index
     @user = User.all
@@ -35,7 +35,7 @@ class Public::UsersController < ApplicationController
 
   def out
     @user = current_user
-    if @user.update(active_is: false) #is_activeカラムをfalseに更新（会員ステータスを退会状態に更新）。実際にはデータベース上の会員レコードは削除されない（論理削除）。
+    if @user.update(is_active: false) #is_activeカラムをfalseに更新（会員ステータスを退会状態に更新）。実際にはデータベース上の会員レコードは削除されない（論理削除）。
       reset_session #セッション情報をリセット（個人情報やアクション履歴の情報をリセット）
       flash[:notice] = "退会しました"
       redirect_to root_path
