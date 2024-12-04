@@ -36,7 +36,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, # uniqueness：一意性を示す
             format: {with: URI::MailTo::EMAIL_REGEXP} # メールアドレスが正しいフォーマットであることを
 
-  def get_uer_image(width, height)
+  def get_user_image(width, height)
     unless user_image.attached? #画像がなかったら
       #Railsアプリのルートディレクトリから、''へのパスを作成
       file_path = Rails.root.join('app/assets/images/no_image.jpg')

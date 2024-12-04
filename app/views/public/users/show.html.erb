@@ -4,7 +4,7 @@
   <h3><%= @user.name %>さんのプロフィール</h3>
 <% end %>
 
-<div><%= image_tag @user.get_uer_image(100, 100) %></div> <!--HTMLのimgタグを生成するimage_tagヘルパーを使う-->
+<div><%= image_tag @user.get_user_image(100, 100) %></div> <!--HTMLのimgタグを生成するimage_tagヘルパーを使う-->
 <!--@user.get_uer_image(100, 100)は画像のURLを返すだけだが、それをimage_tagで囲むとHTMLの<img>タグとして表示される画像になる-->
 <!--image_tagなしだとURL自体が文字列として表示され、画像として表示されない-->
 
