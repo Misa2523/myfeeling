@@ -8,6 +8,25 @@
 <div>投稿者：<%= @feeling_post.user.name %></div>
 <div>投稿日時：<%= @feeling_post.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d %H:%M") %></div>
 
-<div><%= link_to "編集", edit_feeling_post_path(@feeling_post), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>
-<div><%= button_to "削除", feeling_post_path(@feeling_post), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger", style: "font-weight: bold;" %></div>
+<% if current_user.id == @feeling_post.user_id %>
+  <div><%= link_to "編集", edit_feeling_post_path(@feeling_post), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>
+  <div><%= button_to "削除", feeling_post_path(@feeling_post), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger", style: "font-weight: bold;" %></div>
+<% end %>
 
+<!--コメント/いいね-->
+<div>
+  <h5>コメント件数：<%= @feeling_post.comments.count %></h5>
+  <% @feeling_post.comments.each do |comment| %>
+    <%= comment.user.name %><br>
+    <%= image_tag comment.user.get_user_image(50, 50) %><br>
+    <%= comment.comment %><br>
+    <%= comment.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d %H:%M") %>
+  <% end %>
+</div>
+
+<div>
+  <%= form_with model: [@feeling_post, @comment] do |f| %>
+    <%= f.text_area :comment, rows: '3', placeholder: "コメントしてみる" %>
+    <%= f.submit "送信する" %>
+  <% end %>
+</div>

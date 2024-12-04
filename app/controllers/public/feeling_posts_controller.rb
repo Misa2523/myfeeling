@@ -24,15 +24,10 @@ class Public::FeelingPostsController < ApplicationController
   def index
     @feeling_post = FeelingPost.includes(:user).where(users: { is_active: true })
   end
-  
-  
-  # def index
-  #   #会員ステータスが有効である会員の投稿を取得（アソシエーションの関係はincludesで読み込み）
-  #   @cooking_posts = CookingPost.includes(:customer).where(customers: { is_active: true }).order(created_at: :desc).page(params[:page]).per(10) #orderメソッドで投稿された順に並べる
-  # end
 
   def show
     @feeling_post = FeelingPost.find(params[:id])
+    @comment = Comment.new
   end
 
   def edit
