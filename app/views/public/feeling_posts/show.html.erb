@@ -49,7 +49,8 @@
             <% if comment.user == current_user %>
               <!--～～_path(削除対象のコメントが関連するFeelingPostオブジェクト, 削除対象のコメントオブジェクト)-->
               <!--2つの引数を渡すことでRailsは適切なURLを生成する-->
-              <%= link_to "削除", feeling_post_comment_path(@feeling_post, comment), method: :delete, class: "btn btn-sm btn-danger" %>
+              <%= link_to "削除", feeling_post_comment_path(@feeling_post, comment), method: :delete, class: "btn btn-sm btn-danger", remote: true %>
+              <!--remote: trueは非同期通信をするオプション-->
             <% end %>
           </td>
         </tr>
@@ -60,8 +61,10 @@
 
 <!--コメント投稿フォーム-->
 <div>
-  <%= form_with model: [@feeling_post, @comment] do |f| %>
-    <%= f.text_area :comment, rows: '3', placeholder: "コメントしてみる" %>
+  <!--form_withヘルパーではlocal: falseを指定すると非同期通信になる-->
+  <%= form_with model: [@feeling_post, @comment], local: false do |f| %>
+    <%= f.text_area :comment, rows: '3', placeholder: "コメントしてみる", id: "comment_textarea" %>
+    <!--id: "comment_textarea"を追加すると、comment_textareaというIDがテキストエリアに割り当てられる-->
     <%= f.submit "送信する" %>
   <% end %>
 </div>

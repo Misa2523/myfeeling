@@ -11,7 +11,8 @@ class Public::CommentsController < ApplicationController
   def destroy
     comment = Comment.find(params[:id])
     comment.destroy
-    redirect_to feeling_post_path(params[:feeling_post_id])
+    redirect_to request.referer
+    # redirect_to feeling_post_path(params[:feeling_post_id])
   end
 
   private
