@@ -28,7 +28,9 @@
           <td><%= comment.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d %H:%M") %></td>
           <td>
             <% if comment.user == current_user %>
-              <%= link_to "削除", feeling_post_comment_path(comment), method: :delete, class: "btn btn-sm btn-danger" %>
+              <!--～～_path(削除対象のコメントが関連するFeelingPostオブジェクト, 削除対象のコメントオブジェクト)-->
+              <!--2つの引数を渡すことでRailsは適切なURLを生成する-->
+              <%= link_to "削除", feeling_post_comment_path(@feeling_post, comment), method: :delete, class: "btn btn-sm btn-danger" %>
             <% end %>
           </td>
         </tr>
