@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       end
 
       #コメント、いいねは投稿に対し行われるため、親子関係になる
-      resources :comments, only: [:create, :update, :destroy]
+      resources :comments, only: [:create, :destroy]
       resource :favorite, only: [:create, :destroy, :index] #resource単数形 → /:idがURLに含まれない（いいねのidはURLに含める必要がない）
     end
 

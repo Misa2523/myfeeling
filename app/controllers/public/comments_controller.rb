@@ -8,9 +8,6 @@ class Public::CommentsController < ApplicationController
     redirect_to request.referer # 元のページにリダイレクト
   end
 
-  def update
-  end
-
   def destroy
     comment = Comment.find(params[:id])
     comment.destroy

@@ -6,11 +6,13 @@
       <th>タイトル</th>
       <th>本文</th>
       <th>投稿者</th>
+      <th>　　　</th>
+      <th>　　　</th>
     </tr>
   </thead>
   <tbody>
     <% @feeling_post.each do |feeling_post| %>
-      <tr>
+      <tr style="text-align: center;">
         <td>
           <%= link_to feeling_post_path(feeling_post.id), style: "color: black; text-decoration: underline;" do %>
             <%= truncate(feeling_post.title, length: 13) %> <!--10文字のみ表示-->
@@ -20,6 +22,22 @@
         <!--truncate(文字列[, オプション])　文字列を省略するメソッド-->
         <!--「オプション」:length切り捨ての桁数(...も数に含まれる)、:separator切り捨てる箇所を表す文字列、:omission切り捨て時に末尾に付与する文字列-->
         <td><%= feeling_post.user.name %></td>
+        <td><!--いいね数-->
+          <% if feeling_post.favorited_by?(current_user) %> <!--feeling_postモデルに記述したメソッド呼び出し-->
+            <%= link_to feeling_post_favorite_path(feeling_post), method: :delete do %>
+              <i class="fa-solid fa-heart" style="color: red;"></i>
+            <% end %>
+          <% else %>
+            <%= link_to feeling_post_favorite_path(feeling_post), method: :post do %>
+              <i class="fa-solid fa-heart" style="color: gray;"></i>
+            <% end %>
+          <% end %>
+          <%= feeling_post.favorites.count %>
+        </td>
+        <td><!--コメント数-->
+          <i class="fa-regular fa-comment"></i>
+          <%= feeling_post.comments.count %>
+        </td>
       </tr>
     <% end %>
   </tbody>
