@@ -1,0 +1,5 @@
+<!--いいね解除の非同期通信をするJavaScriptファイル-->
+
+<!--いいねを解除する-->
+$('#favorite_btn_<%= @feeling_post.id %>').html("<%= j(render 'favorites/btn', feeling_post: @feeling_post )%>");
+<!--$('#[viewファイルのform_with内のtext_areaで設定したid]').html("<%#= j(部分テンプレートを呼び出す構文) %>");-->

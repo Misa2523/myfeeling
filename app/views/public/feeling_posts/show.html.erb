@@ -9,7 +9,9 @@
 <div>投稿日時：<%= @feeling_post.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d %H:%M") %></div>
 
 <div>     <!--横並びにする-->
-  <div><!--いいね数-->
+  <!--IDを要素に追加することでその要素を独自に特定できる-->
+  <!--@feeling_post.idは各投稿を特定するための識別子（同ページ内に複数の投稿が表示される際、異なる投稿に対し異なる操作をしたいためIDを割り当てる）-->
+  <div id="favorite_btn_<%= @feeling_post.id %>"><!--いいね数-->
     <% if @feeling_post.favorited_by?(current_user) %> <!--feeling_postモデルに記述したメソッド呼び出し-->
       <%= link_to feeling_post_favorite_path(@feeling_post), method: :delete do %>
         <i class="fa-solid fa-heart" style="color: red;"></i>

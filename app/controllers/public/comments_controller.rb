@@ -12,7 +12,6 @@ class Public::CommentsController < ApplicationController
     comment = Comment.find(params[:id])
     comment.destroy
     redirect_to request.referer
-    # redirect_to feeling_post_path(params[:feeling_post_id])
   end
 
   private
