@@ -8,14 +8,10 @@ class Public::CommentsController < ApplicationController
     redirect_to request.referer # 元のページにリダイレクト
   end
 
-  def update
-  end
-
   def destroy
-    # feeling_post = FeelingPost.find(params[:feeling_post_id])
-    # comment = Comment.find(params[:id])
-    # comment.destroy
-    # redirect_to feeling_post_path(params[:feeling_post_id])
+    comment = Comment.find(params[:id])
+    comment.destroy
+    redirect_to request.referer
   end
 
   private

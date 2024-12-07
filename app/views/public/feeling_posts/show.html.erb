@@ -8,14 +8,35 @@
 <div>投稿者：<%= @feeling_post.user.name %></div>
 <div>投稿日時：<%= @feeling_post.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d %H:%M") %></div>
 
+<div>     <!--横並びにする-->
+  <!--IDを要素に追加することでその要素を独自に特定できる-->
+  <!--@feeling_post.idは各投稿を特定するための識別子（同ページ内に複数の投稿が表示される際、異なる投稿に対し異なる操作をしたいためIDを割り当てる）-->
+  <div id="favorite_btn_<%= @feeling_post.id %>"><!--いいね数-->
+    <% if @feeling_post.favorited_by?(current_user) %> <!--feeling_postモデルに記述したメソッド呼び出し-->
+      <%= link_to feeling_post_favorite_path(@feeling_post), method: :delete do %>
+        <i class="fa-solid fa-heart" style="color: red;"></i>
+      <% end %>
+    <% else %>
+      <%= link_to feeling_post_favorite_path(@feeling_post), method: :post do %>
+        <i class="fa-solid fa-heart" style="color: gray;"></i>
+      <% end %>
+    <% end %>
+    <%= @feeling_post.favorites.count %>
+  </div>
+  <div><!--コメント数-->
+    <i class="fa-regular fa-comment"></i>
+    <%= @feeling_post.comments.count %>
+  </div>
+</div>
+
 <% if current_user.id == @feeling_post.user_id %>
   <div><%= link_to "編集", edit_feeling_post_path(@feeling_post), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>
   <div><%= button_to "削除", feeling_post_path(@feeling_post), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger", style: "font-weight: bold;" %></div>
 <% end %>
 
+
 <!--コメント一覧-->
 <div>
-  <h5>コメント件数：<%= @feeling_post.comments.count %></h5>
   <table>
     <tbody>
       <% @feeling_post.comments.each do |comment| %>
@@ -28,7 +49,10 @@
           <td><%= comment.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d %H:%M") %></td>
           <td>
             <% if comment.user == current_user %>
-              <%= link_to "削除", feeling_post_comment_path(comment), method: :delete, class: "btn btn-sm btn-danger" %>
+              <!--～～_path(削除対象のコメントが関連するFeelingPostオブジェクト, 削除対象のコメントオブジェクト)-->
+              <!--2つの引数を渡すことでRailsは適切なURLを生成する-->
+              <%= link_to "削除", feeling_post_comment_path(@feeling_post, comment), method: :delete, class: "btn btn-sm btn-danger", remote: true %>
+              <!--remote: trueは非同期通信をするオプション-->
             <% end %>
           </td>
         </tr>
@@ -39,8 +63,10 @@
 
 <!--コメント投稿フォーム-->
 <div>
-  <%= form_with model: [@feeling_post, @comment] do |f| %>
-    <%= f.text_area :comment, rows: '3', placeholder: "コメントしてみる" %>
+  <!--form_withヘルパーではlocal: falseを指定すると非同期通信になる-->
+  <%= form_with model: [@feeling_post, @comment], local: false do |f| %>
+    <%= f.text_area :comment, rows: '3', placeholder: "コメントしてみる", id: "comment_textarea" %>
+    <!--id: "comment_textarea"を追加すると、comment_textareaというIDがテキストエリアに割り当てられる-->
     <%= f.submit "送信する" %>
   <% end %>
 </div>

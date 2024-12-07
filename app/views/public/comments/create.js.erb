@@ -1,0 +1,13 @@
+<!--コメント作成の非同期通信をするJavaScriptファイル-->
+
+<!--コメント数の表示（@comment.feeling_postをローカル変数として渡す）-->
+$('#comment_counter').html("<%= j(render 'comments/counter', feeling_post: @comment.feeling_post )%>");
+<!--コメントを投稿（@comment.feeling_postをローカル変数として渡す）-->
+$('#comment_index').html("<%= j(render 'comments/index', feeling_post: @comment.feeling_post )%>");
+<!--$('#[viewファイルのform_with内のtext_areaで設定したid]').html("<%#= j(部分テンプレートを呼び出す構文) %>");-->
+
+<!--コメントフォームのテキストエリアを空にする-->
+$('#comment_textarea').val("");
+<!--テキストフォームに入力されたテキストは「値(value)」として表現される-->
+<!--.val("")は、指定された要素の値を設定するための関数で、()内には新しい値を指定する-->
+<!--$('#comment_textarea')はIDがcomment_textareaである要素を選択するためのセレクタで、.val("")とするとテキストエリアの値が空文字列になる-->
