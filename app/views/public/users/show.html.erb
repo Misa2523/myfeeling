@@ -26,4 +26,7 @@
 
   <div><%= link_to "編集", edit_user_path(@user), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>
   <div><%= link_to "退会", check_users_path, class: "btn btn-outline-danger", style: "font-weight: bold;" %></div>
+
+<% else %>
+  <div><%= render "public/relationships/btn", user: @user, options: {class: ""} %></div>
 <% end %>
