@@ -24,9 +24,15 @@
   <h5>アカウント作成日</h5>
   <div><%= @user.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d") %></div>
 
+  <div>
+    <div>フォロー数<strong><%= @user.followings.count %></strong></div>
+    <div>フォロワー数<strong><%= @user.followers.count %></strong></div>
+  </div>
+
   <div><%= link_to "編集", edit_user_path(@user), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>
   <div><%= link_to "退会", check_users_path, class: "btn btn-outline-danger", style: "font-weight: bold;" %></div>
 
 <% else %>
   <div><%= render "public/relationships/btn", user: @user, options: {class: ""} %></div>
+  <!--オプションでクラスはnilを返すよう設定(デフォルト設定になる=||の後に記述した設定を反映)-->
 <% end %>
