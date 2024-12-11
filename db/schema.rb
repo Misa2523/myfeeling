@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_10_19_054810) do
+ActiveRecord::Schema.define(version: 2024_12_11_170358) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -82,12 +82,12 @@ ActiveRecord::Schema.define(version: 2024_10_19_054810) do
 
   create_table "relationships", force: :cascade do |t|
     t.integer "follower_id"
-    t.integer "follwed_id"
+    t.integer "followed_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index "\"follwer_id\", \"follwed_id\"", name: "index_relationships_on_follwer_id_and_follwed_id", unique: true
+    t.index "\"follwer_id\", \"follwed_id\"", name: "index_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
-    t.index ["follwed_id"], name: "index_relationships_on_follwed_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -114,6 +114,6 @@ ActiveRecord::Schema.define(version: 2024_10_19_054810) do
   add_foreign_key "favorites", "feeling_posts"
   add_foreign_key "favorites", "users"
   add_foreign_key "feeling_posts", "users"
+  add_foreign_key "relationships", "users", column: "followed_id"
   add_foreign_key "relationships", "users", column: "follower_id"
-  add_foreign_key "relationships", "users", column: "follwed_id"
 end
