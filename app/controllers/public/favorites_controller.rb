@@ -16,5 +16,11 @@ class Public::FavoritesController < ApplicationController
   end
 
   def index
+    @feeling_posts = current_user.favorites.includes(:feeling_post).map(&:feeling_post)
+    # current_user.favorites：ログインユーザーがいいねした全てのレコードを取得
+    # includes(:feeling_post)：Favoriteモデルと関連するFeelingPostモデルを一度に効率よく取得するために使用
+    # map(&:feeling_post)：RubyのArrayメソッドmapを使用。配列の各要素に対して指定したブロックを適用し、新しい配列を作成する
+    # →ログインユーザーがいいねした投稿で新しく配列が作成されるため、@feeling_postsには表示したいレコードのみ格納される
   end
+
 end

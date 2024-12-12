@@ -1,0 +1,8 @@
+<!--フォローしているユーザーの一覧-->
+<h3>フォロー</h3>
+<% if @users.exists? %>
+  <!--部分テンプレート-->
+  <%= render "public/users/index", users: @users %>
+<% else %>
+  <h5>フォローしているユーザーはいません</h5>
+<% end %>
