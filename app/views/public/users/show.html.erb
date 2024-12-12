@@ -29,6 +29,8 @@
     <div>フォロワー数<strong><%= link_to @user.followers.count, user_followers_path(@user) %></strong></div>
   </div>
 
+  <div><%= link_to "いいねした投稿", feeling_post_favorites_index_path(@user) %></div>
+
   <div><%= link_to "編集", edit_user_path(@user), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>
   <div><%= link_to "退会", check_users_path, class: "btn btn-outline-danger", style: "font-weight: bold;" %></div>
 
