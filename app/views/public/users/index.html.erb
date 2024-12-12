@@ -1,21 +1,4 @@
 <h3>ユーザーリスト</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>ユーザー名</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @user.each do |user| %>
-      <tr>
-        <td>
-          <%= link_to user_path(user.id), style: "color: black; text-decoration: underline;" do %>
-            <%= user.name %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<!--部分テンプレート-->
+<%= render "index", user: @users %>

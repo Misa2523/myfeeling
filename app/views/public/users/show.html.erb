@@ -25,8 +25,8 @@
   <div><%= @user.created_at.in_time_zone('Asia/Tokyo').strftime("%Y/%m/%d") %></div>
 
   <div>
-    <div>フォロー数<strong><%= @user.followings.count %></strong></div>
-    <div>フォロワー数<strong><%= @user.followers.count %></strong></div>
+    <div>フォロー数<strong><%= link_to @user.followings.count, user_followings_path(@user) %></strong></div>
+    <div>フォロワー数<strong><%= link_to @user.followers.count, user_followers_path(@user) %></strong></div>
   </div>
 
   <div><%= link_to "編集", edit_user_path(@user), class: "btn btn-outline-success", style: "font-weight: bold;" %></div>

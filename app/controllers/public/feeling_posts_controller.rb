@@ -22,7 +22,7 @@ class Public::FeelingPostsController < ApplicationController
   end
 
   def index
-    @feeling_post = FeelingPost.includes(:user).where(users: { is_active: true })
+    @feeling_posts = FeelingPost.includes(:user).where(users: { is_active: true })
   end
 
   def show
